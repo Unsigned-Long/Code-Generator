@@ -17,6 +17,10 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 # includes
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
+# include_directories(${CMAKE_SOURCE_DIR}/thirdparty/include)
+
+# link_directories(${CMAKE_SOURCE_DIR}/thirdparty/lib)
+
 # source files
 aux_source_directory(${CMAKE_SOURCE_DIR}/src SRC_FILES)
 
