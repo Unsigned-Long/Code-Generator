@@ -1,3 +1,1 @@
-cd ../build
-cmake ..
-cd ../bash
+cmake -S ../ -B ../build

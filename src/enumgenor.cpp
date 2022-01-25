@@ -17,15 +17,15 @@ void handleParams(int argc, char const *argv[])
     if (argc == 1 || (argc == 2 && !isHelp))
     {
         std::cout << "\nThis simple program is used to generate cpp 'enum' source code.\n\n";
-        std::cout << "Usage: EnumName Option1 [Option2] ...\n\n";
+        std::cout << "Usage: myenumGenor EnumName Option1 [Option2] ...\n\n";
         throw std::runtime_error("");
     }
     if (isHelp)
     {
         std::cout << "This simple program is used to generate cpp 'struct' source code.\n\n";
-        std::cout << "Usage: EnumName Option1 [Option2] ...\n\n";
+        std::cout << "Usage: myenumGenor EnumName Option1 [Option2] ...\n\n";
         std::cout << "Here is an example:\n\n";
-        std::cout << "typing 'enumgenor Color red green blue' will generate code:\n\n";
+        std::cout << "typing 'myenumGenor Color red green blue' will generate code:\n\n";
         std::cout << "enum class Color"
                      "\n{"
                      "\n    /**"
