@@ -1,3 +1,12 @@
+/**
+ * @file cppprojgenor.cpp
+ * @author csl (3079625093@qq.com)
+ * @version 0.1
+ * @date 2022-01-25
+ * 
+ * @copyright Copyright (c) 2022
+ */
+
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -43,6 +52,9 @@ void handleParams(int argc, char const *argv[])
                      "\n├── readme.md"
                      "\n└── src"
                      "\n    └── test.cpp"
+                     "\n└── thirdparty"
+                     "\n    ├── include"
+                     "\n    └── lib"
                      "\n\n5 directories, 7 files"
                   << std::endl;
         throw std::runtime_error("");
@@ -73,6 +85,9 @@ void genor(const std::string &projpath)
     runCommand("mkdir " + FULLPATH(projpath, "bash"));
     runCommand("mkdir " + FULLPATH(projpath, "bin"));
     runCommand("mkdir " + FULLPATH(projpath, ".vscode"));
+    runCommand("mkdir " + FULLPATH(projpath, "/thirdparty"));
+    runCommand("mkdir " + FULLPATH(projpath, "/thirdparty/include"));
+    runCommand("mkdir " + FULLPATH(projpath, "/thirdparty/lib"));
     // carete files
     std::string mainFilename = FULLPATH(projpath, "main.cpp");
     std::string headerFilename = FULLPATH(projpath, "include/" + projname + ".h");
@@ -115,6 +130,8 @@ void genor(const std::string &projpath)
                             "set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)\n\n");
     writeContext(cmakefile, "# includes\n"
                             "include_directories(${CMAKE_SOURCE_DIR}/include)\n\n");
+    writeContext(cmakefile, "# include_directories(${CMAKE_SOURCE_DIR}/thirdparty/include)\n\n");
+    writeContext(cmakefile, "# link_directories(${CMAKE_SOURCE_DIR}/thirdparty/lib)\n\n");
     writeContext(cmakefile, "# source files\n"
                             "aux_source_directory(${CMAKE_SOURCE_DIR}/src SRC_FILES)\n\n");
     writeContext(cmakefile, "# add exe\n"
