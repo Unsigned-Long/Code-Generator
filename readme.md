@@ -2,15 +2,15 @@
 >___Author : csl___  
 >___E-Mail : 3079625093@qq.com___
 ## Override
-This is a program for automatically generating cpp code. At present, it can automatically generate "struct" and "enum".
+This is a program for automatically generating cpp code. At present, it can automatically generate ___"struct"___ ___"enum"___ and ___"cpp project struct"___.
 ## Struct Generator
 ### Usage
 ```
-StructName MemName1:MemType1 [MemName2:MemType2] ...
+mystructGenor StructName MemName1:MemType1 [MemName2:MemType2] ...
 ```
 ### Example
 ```bash
-structgenor Info id:uint
+mystructGenor Info id:uint
 ```
 ```cpp
 struct Info
@@ -46,11 +46,11 @@ std::ostream &operator<<(std::ostream &os, const Info &obj)
 ## Enum Generator
 ### Usage
 ```
-EnumName Option1 [Option2] ...
+myenumGenor EnumName Option1 [Option2] ...
 ```
 ### Example
 ```bash
-enumgenor Color red green blue
+myenumGenor Color red green blue
 ```
 ```cpp
 enum class Color
@@ -81,6 +81,32 @@ std::ostream &operator<<(std::ostream &os, const Color &obj)
     }
     return os;
 };
+```
+## CppProj Generator
+### Usage
+```
+mycppprojGenor projectName
+```
+### Example
+```bash
+mystructGenor test
+```
+```log
+test/
+├── bash
+│   ├── cmake.sh
+│   └── makerun.sh
+├── bin
+├── build
+├── CMakeLists.txt
+├── include
+│   └── test.h
+├── main.cpp
+├── readme.md
+└── src
+    └── test.cpp
+
+5 directories, 7 files
 ```
 ## Other Examples
 ___[generator 'Car' struct](./example/genStruct.h)___
