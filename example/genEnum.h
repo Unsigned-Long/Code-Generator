@@ -4,43 +4,40 @@
 
 #include <iostream>
 
-enum class Color
-{
-    /**
-     * @brief options
-     */
-    RED,
-    YELLOW,
-    GREEN,
-    BLACK,
-    WHITE,
-    BLUE
+enum class Color {
+  /**
+   * @brief options
+   */
+  RED,
+  YELLOW,
+  GREEN,
+  BLACK,
+  WHITE,
+  BLUE
 };
 /**
  * @brief override operator '<<' for type 'Color'
  */
-std::ostream &operator<<(std::ostream &os, const Color &obj)
-{
-    switch (obj)
-    {
+std::ostream &operator<<(std::ostream &os, const Color &obj) {
+  switch (obj) {
     case Color::RED:
-        os << "RED";
-        break;
+      os << "RED";
+      break;
     case Color::YELLOW:
-        os << "YELLOW";
-        break;
+      os << "YELLOW";
+      break;
     case Color::GREEN:
-        os << "GREEN";
-        break;
+      os << "GREEN";
+      break;
     case Color::BLACK:
-        os << "BLACK";
-        break;
+      os << "BLACK";
+      break;
     case Color::WHITE:
-        os << "WHITE";
-        break;
+      os << "WHITE";
+      break;
     case Color::BLUE:
-        os << "BLUE";
-        break;
-    }
-    return os;
+      os << "BLUE";
+      break;
+  }
+  return os;
 };
