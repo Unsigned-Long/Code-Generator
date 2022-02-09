@@ -108,7 +108,7 @@ void genEnum(const std::string &enumName,
 int runCommand(const std::string &cmd) { return system(cmd.c_str()); }
 
 int main(int argc, char const *argv[]) {
-  ::ofs = new std::ofstream("/home/csl/StudyCPP/codeGenor/example/temp.log");
+  ::ofs = new std::ofstream("./temp.log");
 
   try {
     handleParams(argc, argv);
@@ -120,7 +120,8 @@ int main(int argc, char const *argv[]) {
   ofs->close();
   delete ofs;
   ::runCommand(
-      "clang-format /home/csl/StudyCPP/codeGenor/example/temp.log "
+      "clang-format ./temp.log "
       "--style=Google");
+  ::runCommand("rm ./temp.log");
   return 0;
 }
