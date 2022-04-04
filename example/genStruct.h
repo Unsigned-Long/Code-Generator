@@ -1,13 +1,12 @@
 /**
- * @brief cmd ['structgenor Car provider:std::string price:float weight:double
- * "color:unsigned char"']
+ * @brief cmd [structgenor Car provider:std::string price:float weight:double "color:unsigned char"]
  */
 
 #include <iostream>
 #include <string>
 
 struct Car {
- private:
+private:
   /**
    * @brief the members
    */
@@ -16,7 +15,7 @@ struct Car {
   double _weight;
   unsigned char _color;
 
- public:
+public:
   /**
    * @brief construct a new Car object
    */

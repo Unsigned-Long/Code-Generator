@@ -15,5 +15,3 @@ set(CMAKE_INSTALL_PREFIX /usr/local)
 install(PROGRAMS ${CMAKE_SOURCE_DIR}/bin/mystructGenor DESTINATION bin/)
 
 install(PROGRAMS ${CMAKE_SOURCE_DIR}/bin/myenumGenor DESTINATION bin/)
-
-install(PROGRAMS ${CMAKE_SOURCE_DIR}/bin/mycppprojGenor DESTINATION bin/)
