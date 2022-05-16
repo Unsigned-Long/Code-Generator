@@ -77,15 +77,23 @@ std::pair<std::string, std::vector<std::string>> init(int argc,
 
 void genEnum(const std::string &enumName,
              const std::vector<std::string> &options) {
-  OUTPUT_WITH_END("enum class " + enumName)
+  OUTPUT_WITH_END("enum " << enumName << " : int ")
   OUTPUT_WITH_END("{")
   OUTPUT_WITH_END("/**")
   OUTPUT_WITH_END(" * @brief options")
   OUTPUT_WITH_END(" */")
   for (int i = 0; i != options.size() - 1; ++i)
-    OUTPUT_WITH_END(options.at(i) + ",")
-  OUTPUT_WITH_END(options.back())
+    OUTPUT_WITH_END(options.at(i) << " = 1 << " << i << ",")
+  OUTPUT_WITH_END(options.back() << " = 1 << " << options.size() - 1)
   OUTPUT_WITH_END("};")
+  for (int i = 0; i != options.size(); ++i) {
+    OUTPUT_WITH_END("bool is" << enumName << "With" << options.at(i) << "(int obj)")
+    OUTPUT_WITH_END("{")
+    OUTPUT_WITH_END("return (" << enumName << "::" << options.at(i) << "==("
+                               << enumName << "::" << options.at(i) << " & obj));")
+    OUTPUT_WITH_END("}")
+  }
+
   OUTPUT_WITH_END("/**")
   OUTPUT_WITH_END(" * @brief override operator '<<' for type '" + enumName +
                   "'")
