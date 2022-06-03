@@ -29,7 +29,8 @@ std::pair<std::string, std::vector<MemInfo>> init(int argc,
 
   std::vector<MemInfo> info(argc - 2);
 
-  for (int i = 2; i != argc; ++i) info.at(i - 2) = split(argv[i]);
+  for (int i = 2; i != argc; ++i)
+    info.at(i - 2) = split(argv[i]);
 
   return std::make_pair(structName, info);
 }
@@ -91,12 +92,12 @@ void genStruct(const std::string &structName,
                const std::vector<MemInfo> &info) {
   OUTPUT_WITH_END("struct " + structName)
   OUTPUT_WITH_END("{")
-  OUTPUT_WITH_END("private:")
+  OUTPUT_WITH_END("public:")
   OUTPUT_WITH_END("/**")
   OUTPUT_WITH_END(" * @brief the members")
   OUTPUT_WITH_END(" */")
   for (const auto &elem : info)
-    OUTPUT_WITH_END(elem._varType + " _" + elem._varName + ";")
+    OUTPUT_WITH_END(elem._varType + " " + elem._varName + ";")
   OUTPUT_WITH_END("")
   OUTPUT_WITH_END("public:")
   OUTPUT_WITH_END("/**")
@@ -109,17 +110,9 @@ void genStruct(const std::string &structName,
   OUTPUT_WITH_END(")")
   OUTPUT(": ")
   for (int i = 0; i != info.size() - 1; ++i)
-    OUTPUT("_" + info.at(i)._varName + "(" + info.at(i)._varName + "), ")
-  OUTPUT("_" + info.back()._varName + "(" + info.back()._varName + ")")
+    OUTPUT(info.at(i)._varName + "(" + info.at(i)._varName + "), ")
+  OUTPUT(info.back()._varName + "(" + info.back()._varName + ")")
   OUTPUT_WITH_END(" {}")
-  OUTPUT_WITH_END("")
-  for (const auto &elem : info) {
-    OUTPUT_WITH_END("inline " + elem._varType + " &" + elem._varName +
-                    "() { return this->_" + elem._varName + "; }")
-    OUTPUT_WITH_END("inline const " + elem._varType + " &" + elem._varName +
-                    "() const { return this->_" + elem._varName + "; }")
-    OUTPUT_WITH_END("")
-  }
   OUTPUT_WITH_END("};")
   OUTPUT_WITH_END("/**")
   OUTPUT_WITH_END(" * @brief override operator '<<' for type '" + structName +
@@ -131,10 +124,10 @@ void genStruct(const std::string &structName,
   OUTPUT_WITH_END("os << '{';");
   OUTPUT("os ")
   OUTPUT(std::string("<< ") + "\"'" + info.front()._varName + "': \" << obj." +
-         info.front()._varName + "()")
+         info.front()._varName)
   for (int i = 1; i != info.size(); ++i)
     OUTPUT(std::string(" << ") + "\", '" + info.at(i)._varName +
-           "': \" << obj." + info.at(i)._varName + "()")
+           "': \" << obj." + info.at(i)._varName)
   OUTPUT_WITH_END(";")
   OUTPUT_WITH_END("os << '}';");
   OUTPUT_WITH_END("return os;")
