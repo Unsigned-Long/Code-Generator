@@ -82,33 +82,42 @@ void genEnum(const std::string &enumName,
   OUTPUT_WITH_END("/**")
   OUTPUT_WITH_END(" * @brief options")
   OUTPUT_WITH_END(" */")
+  OUTPUT_WITH_END("NONE = 0,")
   for (int i = 0; i != options.size() - 1; ++i)
     OUTPUT_WITH_END(options.at(i) << " = 1 << " << i << ",")
-  OUTPUT_WITH_END(options.back() << " = 1 << " << options.size() - 1)
+  OUTPUT_WITH_END(options.back() << " = 1 << " << options.size() - 1 << ",")
+  OUTPUT("ALL = ")
+  for (int i = 0; i != options.size() - 1; ++i)
+    OUTPUT(options.at(i) << "|")
+  OUTPUT_WITH_END(options.back())
   OUTPUT_WITH_END("};")
-  for (int i = 0; i != options.size(); ++i) {
-    OUTPUT_WITH_END("bool is" << enumName << "With" << options.at(i) << "(int obj)")
-    OUTPUT_WITH_END("{")
-    OUTPUT_WITH_END("return (" << enumName << "::" << options.at(i) << "==("
-                               << enumName << "::" << options.at(i) << " & obj));")
-    OUTPUT_WITH_END("}")
-  }
+
+  OUTPUT_WITH_END("bool Is" << enumName << "With(int desired, int cur" << enumName << ")")
+  OUTPUT_WITH_END("{")
+  OUTPUT_WITH_END("return (desired == (desired & cur" << enumName << "));")
+  OUTPUT_WITH_END("}")
 
   OUTPUT_WITH_END("/**")
   OUTPUT_WITH_END(" * @brief override operator '<<' for type '" + enumName +
                   "'")
   OUTPUT_WITH_END(" */")
-  OUTPUT_WITH_END("std::ostream &operator<<(std::ostream &os, const " +
-                  enumName + " &obj)")
+  OUTPUT_WITH_END("std::ostream &operator<<(std::ostream &os, const " << enumName << " &cur" << enumName << ")")
   OUTPUT_WITH_END("{")
-  OUTPUT_WITH_END("switch (obj)")
-  OUTPUT_WITH_END("{")
-  for (const auto &elem : options) {
-    OUTPUT_WITH_END("case " + enumName + "::" + elem + ":")
-    OUTPUT_WITH_END("os << \"" + elem + "\";")
-    OUTPUT_WITH_END("break;")
-  }
+  OUTPUT_WITH_END("std::stringstream stream;")
+  OUTPUT_WITH_END("int count = 0;")
+  OUTPUT_WITH_END("if(Is" << enumName << "With(" << options.front() << ", cur" << enumName << ")){")
+  OUTPUT_WITH_END("stream << \"" + options.front() << "\";")
+  OUTPUT_WITH_END("++count;")
   OUTPUT_WITH_END("}")
+  for (int i = 1; i != options.size(); ++i) {
+    OUTPUT_WITH_END("if(Is" << enumName << "With(" << options.at(i) << ", cur" << enumName << ")){")
+    OUTPUT_WITH_END("stream << \" | " + options.at(i) << "\";")
+    OUTPUT_WITH_END("++count;")
+    OUTPUT_WITH_END("}")
+  }
+  OUTPUT_WITH_END("if(count == 0){ os << \"NONE\";}")
+  OUTPUT_WITH_END("else if(count == " << options.size() << "){ os << \"ALL\";}")
+  OUTPUT_WITH_END("else{ os << stream.str();}")
   OUTPUT_WITH_END("return os;")
   OUTPUT_WITH_END("};")
 }
