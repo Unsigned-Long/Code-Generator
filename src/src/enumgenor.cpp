@@ -117,7 +117,10 @@ void genEnum(const std::string &enumName,
   }
   OUTPUT_WITH_END("if(count == 0){ os << \"NONE\";}")
   OUTPUT_WITH_END("else if(count == " << options.size() << "){ os << \"ALL\";}")
-  OUTPUT_WITH_END("else{ os << stream.str();}")
+  OUTPUT_WITH_END("else{")
+  OUTPUT_WITH_END("std::string str = stream.str();")
+  OUTPUT_WITH_END("if (str.at(1) == '|') {str = str.substr(3, str.size() - 3);}")
+  OUTPUT_WITH_END("os << str;}")
   OUTPUT_WITH_END("return os;")
   OUTPUT_WITH_END("};")
 }
