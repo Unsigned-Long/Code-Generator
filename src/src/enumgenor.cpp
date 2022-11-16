@@ -68,8 +68,6 @@ std::pair<std::string, std::vector<std::string>> init(int argc,
   std::string enumName = argv[1];
   for (int i = 2; i != argc; ++i) {
     std::string option = argv[i];
-    std::for_each(option.begin(), option.end(),
-                  [](char &c) -> void { c = std::toupper(c); });
     options.push_back(option);
   }
   return {enumName, options};
