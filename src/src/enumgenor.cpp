@@ -75,7 +75,7 @@ std::pair<std::string, std::vector<std::string>> init(int argc,
 
 void genEnum(const std::string &enumName,
              const std::vector<std::string> &options) {
-  OUTPUT_WITH_END("enum " << enumName << " : int ")
+  OUTPUT_WITH_END("enum " << enumName << " : std::uint32_t ")
   OUTPUT_WITH_END("{")
   OUTPUT_WITH_END("/**")
   OUTPUT_WITH_END(" * @brief options")
@@ -90,7 +90,7 @@ void genEnum(const std::string &enumName,
   OUTPUT_WITH_END(options.back())
   OUTPUT_WITH_END("};")
 
-  OUTPUT_WITH_END("bool Is" << enumName << "With(int desired, int cur" << enumName << ")")
+  OUTPUT_WITH_END("bool Is" << enumName << "With(std::uint32_t desired, std::uint32_t cur" << enumName << ")")
   OUTPUT_WITH_END("{")
   OUTPUT_WITH_END("return (desired == (desired & cur" << enumName << "));")
   OUTPUT_WITH_END("}")
